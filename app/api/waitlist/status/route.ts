@@ -28,13 +28,20 @@ export async function GET(request: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? request.nextUrl.origin;
   const referralLink = `${baseUrl}?ref=${user.referral_code}`;
 
-  const { count } = await supabaseAdmin
-    .from("waitlist_users")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "confirmed")
-    .lt("confirmed_at", user.confirmed_at);
-
-  const rank = (count ?? 0) + 1;
+  const [countAheadByReferrals, countAheadByDate] = await Promise.all([
+    supabaseAdmin
+      .from("waitlist_users")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "confirmed")
+      .gt("referral_count", user.referral_count),
+    supabaseAdmin
+      .from("waitlist_users")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "confirmed")
+      .eq("referral_count", user.referral_count)
+      .lt("confirmed_at", user.confirmed_at),
+  ]);
+  const rank = (countAheadByReferrals.count ?? 0) + (countAheadByDate.count ?? 0) + 1;
 
   return NextResponse.json({
     found: true,

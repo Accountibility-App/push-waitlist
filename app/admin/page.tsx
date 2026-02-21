@@ -58,7 +58,7 @@ export default async function AdminPage({
   return (
     <div className="min-h-screen bg-muted/30 p-6">
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-2xl font-bold">Admin – Push Warteliste</h1>
+        <h1 className="text-2xl font-bold">Admin – PUSH Warteliste</h1>
         <AdminDashboard
           total={total ?? 0}
           pending={pending ?? 0}

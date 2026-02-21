@@ -33,7 +33,7 @@ export function ValueProps() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.4 }}
         >
-          Warum Push?
+          Warum PUSH?
         </motion.h2>
         <motion.p
           className="mx-auto mt-2 max-w-2xl text-center text-muted-foreground"

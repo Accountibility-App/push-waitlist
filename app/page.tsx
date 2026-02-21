@@ -7,9 +7,9 @@ import { Background3D } from "@/components/background-3d";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Push – Join the Waitlist",
+  title: "PUSH – Disziplin die sichtbar wird | Warteliste",
   description:
-    "Join the Push waitlist. Be the first to get access. Invite friends and move up in line.",
+    "PUSH – Disziplin die sichtbar wird. Sichere dir einen Platz auf der Warteliste.",
 };
 
 type SearchParams = Promise<{ ref?: string }>;

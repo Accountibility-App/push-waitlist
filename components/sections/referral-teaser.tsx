@@ -17,9 +17,7 @@ export function ReferralTeaser() {
           <Gift className="mx-auto h-12 w-12 text-primary" />
           <h2 className="mt-4 text-xl font-semibold">Invite friends, move up</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Dein Rang auf der Warteliste wird zuerst durch dein Anmeldedatum bestimmt. Wer Freunde
-            einlädt, rückt bei gleichem Datum vor – mehr Referrals = bessere Position. Teile deinen
-            persönlichen Link nach der Bestätigung.
+            Referrals zählen mehr als das Anmeldedatum: Wer mehr bestätigte Freunde einlädt, steht weiter vorne. Bei gleicher Referral-Anzahl zählt das Bestätigungsdatum. Teile deinen persönlichen Link nach der Bestätigung.
           </p>
         </motion.div>
       </div>

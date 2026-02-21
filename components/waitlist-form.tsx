@@ -167,7 +167,7 @@ export function WaitlistForm({ refCode, className }: WaitlistFormProps) {
           <a href="/datenschutz" className="underline hover:no-underline">
             Datenschutzerklärung
           </a>{" "}
-          gelesen und stimme der Verarbeitung meiner Daten sowie dem Erhalt von E-Mails zu Push zu.
+          gelesen und stimme der Verarbeitung meiner Daten sowie dem Erhalt von E-Mails zu PUSH zu.
         </Label>
       </div>
 

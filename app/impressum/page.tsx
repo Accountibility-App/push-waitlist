@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Impressum – Push",
+  title: "Impressum – PUSH",
   description: "Impressum und Anbieterkennzeichnung",
 };
 

@@ -74,12 +74,22 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const rankResult = await supabaseAdmin
-    .from("waitlist_users")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "confirmed")
-    .lt("confirmed_at", new Date().toISOString());
-  const rank = (rankResult.count ?? 0) + 1;
+  const confirmedAt = new Date().toISOString();
+  const userReferralCount = 0;
+  const [countAheadByReferrals, countAheadByDate] = await Promise.all([
+    supabaseAdmin
+      .from("waitlist_users")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "confirmed")
+      .gt("referral_count", userReferralCount),
+    supabaseAdmin
+      .from("waitlist_users")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "confirmed")
+      .eq("referral_count", userReferralCount)
+      .lt("confirmed_at", confirmedAt),
+  ]);
+  const rank = (countAheadByReferrals.count ?? 0) + (countAheadByDate.count ?? 0) + 1;
 
   const referralLink = `${baseUrl}?ref=${user.referral_code}`;
   await sendWelcomeEmail(user.email, referralLink, rank);

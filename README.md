@@ -1,4 +1,4 @@
-# Push Waitlist
+# PUSH – Disziplin die sichtbar wird (Waitlist)
 
 Moderne, DSGVO-orientierte Wartelisten-Landing mit Referral-System.  
 Tech-Stack: **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Supabase**, **Brevo** (E-Mail).

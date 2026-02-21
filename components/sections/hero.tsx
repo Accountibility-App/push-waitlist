@@ -18,7 +18,7 @@ export function Hero({ refCode }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          Push – dein Fitness-Buddy
+          PUSH – Disziplin die sichtbar wird
         </motion.h1>
         <motion.p
           className="mt-4 text-lg text-muted-foreground sm:text-xl"
@@ -26,7 +26,7 @@ export function Hero({ refCode }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          Bleib dran. Setz Ziele. Erreiche sie. Sichere dir jetzt einen Platz auf der Warteliste.
+          Setz Ziele. Bleib dran. Sieh deinen Fortschritt. Sichere dir jetzt einen Platz auf der Warteliste.
         </motion.p>
         <motion.div
           className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"

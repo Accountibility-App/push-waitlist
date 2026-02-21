@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     .from("waitlist_users")
     .select("email, platforms, interest, status, referral_count, created_at, confirmed_at")
     .eq("status", "confirmed")
+    .order("referral_count", { ascending: false })
     .order("confirmed_at", { ascending: true });
 
   type Row = { email: string; platforms: string[] | null; interest: string | null; referral_count: number; created_at: string; confirmed_at: string | null };
@@ -34,7 +35,7 @@ export async function GET(request: NextRequest) {
   return new NextResponse(bom + csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": "attachment; filename=push-waitlist.csv",
+      "Content-Disposition": "attachment; filename=PUSH-waitlist.csv",
     },
   });
 }

@@ -87,9 +87,9 @@ function SuccessContent() {
   }
 
   if (confirmed && referralLink) {
-    const shareMail = `mailto:?subject=Join%20the%20Push%20waitlist&body=${encodeURIComponent(`Schau dir Push an und trag dich in die Warteliste ein: ${referralLink}`)}`;
-    const shareWhatsApp = `https://wa.me/?text=${encodeURIComponent(`Trag dich in die Push-Warteliste ein: ${referralLink}`)}`;
-    const shareTelegram = `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent("Join the Push waitlist")}`;
+    const shareMail = `mailto:?subject=PUSH%20%E2%80%93%20Warteliste&body=${encodeURIComponent(`PUSH – Disziplin die sichtbar wird. Trag dich ein: ${referralLink}`)}`;
+    const shareWhatsApp = `https://wa.me/?text=${encodeURIComponent(`PUSH – Disziplin die sichtbar wird. Warteliste: ${referralLink}`)}`;
+    const shareTelegram = `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent("PUSH – Disziplin die sichtbar wird")}`;
 
     return (
       <div className="mx-auto max-w-md space-y-6 px-4 py-16 text-center">

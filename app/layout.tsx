@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Push – Join the Waitlist",
+  title: "PUSH – Disziplin die sichtbar wird | Warteliste",
   description:
-    "Join the Push waitlist. Be the first to get access. Invite friends and move up in line.",
+    "PUSH – Disziplin die sichtbar wird. Sichere dir einen Platz auf der Warteliste. Invite friends, move up.",
   icons: { icon: "/penguin-icon.png" },
   openGraph: {
-    title: "Push – Join the Waitlist",
-    description: "Join the Push waitlist. Invite friends, move up.",
+    title: "PUSH – Disziplin die sichtbar wird",
+    description: "Warteliste. Invite friends, move up.",
   },
 };
 
