@@ -19,12 +19,12 @@ async function sendBrevoEmail(params: {
   subject: string;
   html: string;
 }): Promise<boolean> {
-  const apiKey = process.env.BREVO_API_KEY;
+  const apiKey = process.env.BREVO_API_KEY?.trim();
   if (!apiKey) {
     console.warn("BREVO_API_KEY not set, skipping email");
     return false;
   }
-  const fromRaw = process.env.FROM_EMAIL ?? "Push <noreplyandinfo.push@gmail.com>";
+  const fromRaw = (process.env.FROM_EMAIL ?? "Push <noreplyandinfo.push@gmail.com>").trim();
   const sender = parseFromEmail(fromRaw);
 
   const res = await fetch(BREVO_API_URL, {
