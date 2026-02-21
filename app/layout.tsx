@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Push – Join the Waitlist",
   description:
     "Join the Push waitlist. Be the first to get access. Invite friends and move up in line.",
+  icons: { icon: "/penguin-icon.png" },
   openGraph: {
     title: "Push – Join the Waitlist",
     description: "Join the Push waitlist. Invite friends, move up.",
