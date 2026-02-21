@@ -50,6 +50,7 @@ export function WaitlistForm({ refCode, className }: WaitlistFormProps) {
     setError(null);
     const form = e.currentTarget;
     const formData = new FormData(form);
+    const websiteRaw = (formData.get("website") as string) ?? "";
     const raw = {
       email: formData.get("email") as string,
       platforms: platforms.length ? platforms : [],
@@ -57,7 +58,7 @@ export function WaitlistForm({ refCode, className }: WaitlistFormProps) {
       ref: refCode ?? formData.get("ref") ?? undefined,
       consent: consentChecked,
       consent_version: formData.get("consent_version") as string | undefined,
-      website: formData.get("website") as string | undefined,
+      website: websiteRaw.trim() ? undefined : websiteRaw,
     };
     const parsed = waitlistSignupSchema.safeParse(raw);
     if (!parsed.success) {
