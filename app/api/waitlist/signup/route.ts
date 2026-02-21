@@ -100,8 +100,9 @@ export async function POST(request: NextRequest) {
       if (insertError) {
         const errCause = insertError instanceof Error && "cause" in insertError ? (insertError as Error & { cause?: unknown }).cause : null;
         console.error("Insert waitlist_users error:", insertError.message, "cause:", errCause != null ? String(errCause) : "none");
-        if (typeof (insertError as Record<string, unknown>).details !== "undefined") {
-          console.error("Supabase details:", (insertError as Record<string, unknown>).details);
+        const errObj = insertError as unknown as Record<string, unknown>;
+        if (typeof errObj.details !== "undefined") {
+          console.error("Supabase details:", errObj.details);
         }
         return NextResponse.json(
           { error: "Registrierung fehlgeschlagen. Bitte später erneut versuchen." },
