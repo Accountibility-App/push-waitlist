@@ -16,6 +16,11 @@ export function getSupabaseAdmin(): SupabaseClient {
 /** Use getSupabaseAdmin() in API routes so env is only required at runtime, not at build. */
 export const supabaseAdmin = new Proxy({} as SupabaseClient, {
   get(_, prop) {
-    return (getSupabaseAdmin() as unknown as Record<string, unknown>)[prop as string];
+    const client = getSupabaseAdmin();
+    const value = (client as unknown as Record<string, unknown>)[prop as string];
+    if (typeof value === "function") {
+      return value.bind(client);
+    }
+    return value;
   },
 });

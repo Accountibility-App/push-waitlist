@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { waitlistSignupSchema } from "@/lib/validation";
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { generateReferralCode } from "@/lib/utils";
 import { hashForConsent, maskEmail } from "@/lib/utils";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -37,9 +37,10 @@ export async function POST(request: NextRequest) {
       ? await hashForConsent(userAgent, CONSENT_SALT)
       : null;
 
+    const supabase = getSupabaseAdmin();
     let referredByUserId: string | null = null;
     if (ref) {
-      const { data: referrer } = await supabaseAdmin
+      const { data: referrer } = await supabase
         .from("waitlist_users")
         .select("id")
         .eq("referral_code", ref.trim().toUpperCase())
@@ -49,14 +50,14 @@ export async function POST(request: NextRequest) {
     }
 
     const referralCode = generateReferralCode();
-    const { data: existing } = await supabaseAdmin
+    const { data: existing } = await supabase
       .from("waitlist_users")
       .select("id, status")
       .ilike("email", email)
       .single();
 
     let userId: string;
-    const platformsArray = platforms.length ? platforms : null;
+    const platformsArray = platforms.length ? platforms : [];
 
     if (existing) {
       if (existing.status === "confirmed") {
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
           { status: 409 }
         );
       }
-      await supabaseAdmin
+      await supabase
         .from("waitlist_users")
         .update({
           platforms: platformsArray,
@@ -76,16 +77,15 @@ export async function POST(request: NextRequest) {
           consent_at: new Date().toISOString(),
           consent_ip_hash: consentIpHash,
           consent_user_agent_hash: consentUserAgentHash,
-          updated_at: new Date().toISOString(),
         })
         .eq("id", existing.id);
       userId = existing.id;
     } else {
-      const { data: inserted, error: insertError } = await supabaseAdmin
+      const { data: inserted, error: insertError } = await supabase
         .from("waitlist_users")
         .insert({
           email: email.toLowerCase(),
-          platforms: platformsArray,
+          platforms: platformsArray as string[],
           interest: interest || null,
           status: "pending",
           referral_code: referralCode,
@@ -98,7 +98,11 @@ export async function POST(request: NextRequest) {
         .select("id")
         .single();
       if (insertError) {
-        console.error("Insert waitlist_users error:", insertError.message);
+        const errCause = insertError instanceof Error && "cause" in insertError ? (insertError as Error & { cause?: unknown }).cause : null;
+        console.error("Insert waitlist_users error:", insertError.message, "cause:", errCause != null ? String(errCause) : "none");
+        if (typeof (insertError as Record<string, unknown>).details !== "undefined") {
+          console.error("Supabase details:", (insertError as Record<string, unknown>).details);
+        }
         return NextResponse.json(
           { error: "Registrierung fehlgeschlagen. Bitte später erneut versuchen." },
           { status: 500 }
@@ -109,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     const { raw: rawToken, hash: tokenHash } = generateDoiToken();
     const expiresAt = getDoiExpiry();
-    const { error: tokenError } = await supabaseAdmin.from("doi_tokens").insert({
+    const { error: tokenError } = await supabase.from("doi_tokens").insert({
       user_id: userId,
       token_hash: tokenHash,
       expires_at: expiresAt.toISOString(),
@@ -137,7 +141,9 @@ export async function POST(request: NextRequest) {
       email: maskEmail(email),
     });
   } catch (e) {
-    console.error("Signup error:", e);
+    const err = e instanceof Error ? e : new Error(String(e));
+    const cause = "cause" in err ? (err as Error & { cause?: unknown }).cause : null;
+    console.error("Signup error:", err.message, cause ?? "");
     return NextResponse.json(
       { error: "Ein Fehler ist aufgetreten." },
       { status: 500 }

@@ -52,7 +52,6 @@ export async function GET(request: NextRequest) {
     .update({
       status: "confirmed",
       confirmed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
     })
     .eq("id", userId);
 
@@ -67,7 +66,7 @@ export async function GET(request: NextRequest) {
     const newCount = (referrer?.referral_count ?? 0) + 1;
     await supabaseAdmin
       .from("waitlist_users")
-      .update({ referral_count: newCount, updated_at: new Date().toISOString() })
+      .update({ referral_count: newCount })
       .eq("id", referrerId);
     await supabaseAdmin.from("referral_events").insert({
       referrer_user_id: referrerId,
