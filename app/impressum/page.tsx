@@ -20,7 +20,7 @@ export default async function ImpressumPage() {
             ← Zurück
           </Button>
         </Link>
-        <article className="prose prose-neutral dark:prose-invert max-w-none">
+        <article className="prose prose-invert prose-neutral max-w-none">
           <ReactMarkdown>{content}</ReactMarkdown>
         </article>
       </main>

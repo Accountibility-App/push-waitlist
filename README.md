@@ -1,7 +1,7 @@
 # Push Waitlist
 
 Moderne, DSGVO-orientierte Wartelisten-Landing mit Referral-System.  
-Tech-Stack: **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Supabase**, **Resend**.
+Tech-Stack: **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Supabase**, **Brevo** (E-Mail).
 
 ## Features
 
@@ -27,7 +27,7 @@ npm install
 Kopie von `.env.example` nach `.env.local` und Werte eintragen:
 
 - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` – von Supabase Dashboard
-- `RESEND_API_KEY`, `FROM_EMAIL` – für E-Mails
+- `BREVO_API_KEY`, `FROM_EMAIL` – für E-Mails (Brevo unterstützt Gmail ohne eigene Domain)
 - `NEXT_PUBLIC_BASE_URL` – z. B. `https://push.yourdomain.com`
 - `ADMIN_USER`, `ADMIN_PASSWORD` – für `/admin` (Basic Auth)
 
@@ -77,7 +77,7 @@ supabase/migrations/    # SQL-Schema
 ## Hinweise
 
 - **Impressum & Datenschutz**: Platzhaltertexte – bitte durch rechtlich geprüfte Fassungen ersetzen.
-- **E-Mail**: Resend erfordert verifizierte Domain; ohne `RESEND_API_KEY` schlägt der Versand still fehl (Log-Warnung).
+- **E-Mail**: Brevo-API-Key unter [app.brevo.com/settings/keys/api](https://app.brevo.com/settings/keys/api); Absender (z. B. Gmail) in Brevo verifizieren. Ohne `BREVO_API_KEY` schlägt der Versand still fehl (Log-Warnung).
 - **Rate Limit**: Standard 5 Anfragen/Minute pro IP; für Skalierung Upstash Redis oder Vercel KV einbinden.
 - **RLS**: Supabase RLS ist aktiv; alle Schreibzugriffe nur über Service Role (serverseitig).
 

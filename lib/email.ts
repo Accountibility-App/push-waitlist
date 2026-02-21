@@ -1,19 +1,57 @@
-import { Resend } from "resend";
+/**
+ * E-Mail-Versand via Brevo (ehem. Sendinblue).
+ * Brevo erlaubt verifizierte Absender wie Gmail ohne eigene Domain.
+ * API-Dokumentation: https://developers.brevo.com/reference/sendtransacemail
+ */
 
-const resend = process.env.RESEND_API_KEY
-  ? new Resend(process.env.RESEND_API_KEY)
-  : null;
+const BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
 
-const FROM_EMAIL = process.env.FROM_EMAIL ?? "Push <noreply@example.com>";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://push.example.com";
+function parseFromEmail(from: string): { name: string; email: string } {
+  const match = from.match(/^(.+?)\s*<([^>]+)>$/);
+  if (match) {
+    return { name: match[1]!.trim(), email: match[2]!.trim() };
+  }
+  return { name: "Push", email: from.trim() };
+}
 
-export async function sendDoiEmail(email: string, confirmUrl: string): Promise<boolean> {
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set, skipping DOI email");
+async function sendBrevoEmail(params: {
+  to: string;
+  subject: string;
+  html: string;
+}): Promise<boolean> {
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
+    console.warn("BREVO_API_KEY not set, skipping email");
     return false;
   }
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
+  const fromRaw = process.env.FROM_EMAIL ?? "Push <noreplyandinfo.push@gmail.com>";
+  const sender = parseFromEmail(fromRaw);
+
+  const res = await fetch(BREVO_API_URL, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "api-key": apiKey,
+    },
+    body: JSON.stringify({
+      sender: { name: sender.name, email: sender.email },
+      to: [{ email: params.to }],
+      subject: params.subject,
+      htmlContent: params.html,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("Brevo API error:", res.status, err);
+    return false;
+  }
+  return true;
+}
+
+export async function sendDoiEmail(email: string, confirmUrl: string): Promise<boolean> {
+  return sendBrevoEmail({
     to: email,
     subject: "Bestätige deinen Platz auf der Push-Warteliste",
     html: `
@@ -28,11 +66,6 @@ export async function sendDoiEmail(email: string, confirmUrl: string): Promise<b
       </div>
     `,
   });
-  if (error) {
-    console.error("Resend DOI error:", error);
-    return false;
-  }
-  return true;
 }
 
 export async function sendWelcomeEmail(
@@ -40,9 +73,7 @@ export async function sendWelcomeEmail(
   referralLink: string,
   rank: number
 ): Promise<boolean> {
-  if (!resend) return false;
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
+  return sendBrevoEmail({
     to: email,
     subject: "Du bist auf der Push-Warteliste",
     html: `
@@ -56,9 +87,4 @@ export async function sendWelcomeEmail(
       </div>
     `,
   });
-  if (error) {
-    console.error("Resend welcome error:", error);
-    return false;
-  }
-  return true;
 }

@@ -1,10 +1,11 @@
-# Datenschutzerklärung (Platzhalter)
-
-**Rechtlicher Hinweis:** Dies ist ein Platzhalter. Eine rechtliche Prüfung durch einen Anwalt oder Datenschutzbeauftragten wird empfohlen.
+# Datenschutzerklärung
 
 ## Verantwortlicher
 
-[Name und Anschrift wie im Impressum]
+Bastian Schwinger  
+Nelkenweg 6  
+99326 Stadtilm  
+E-Mail: noreplyandinfo.push@gmail.com
 
 ## Erhebung und Verarbeitung
 
@@ -26,7 +27,7 @@ Wir speichern **keine** Klar-IP-Adressen dauerhaft. Für den Nachweis der Einwil
 
 - **Vercel** – Hosting (USA; ggf. Standardvertragsklauseln)
 - **Supabase** – Datenbank (EU möglich)
-- **Resend / Postmark** – E-Mail-Versand (USA; ggf. Standardvertragsklauseln)
+- **Brevo** (ehem. Sendinblue) – E-Mail-Versand (EU möglich; Auftragsverarbeitung gemäß AGB)
 - **Analytics** – Sofern eingesetzt: Plausible/Umami (cookieless) oder Google Analytics nur mit Einwilligung
 
 ## Speicherdauer
@@ -40,7 +41,7 @@ Wir speichern **keine** Klar-IP-Adressen dauerhaft. Für den Nachweis der Einwil
 - Widerspruch und Widerruf der Einwilligung
 - Beschwerde bei einer Aufsichtsbehörde
 
-Für Auskunft oder Löschung: [E-Mail des Verantwortlichen]
+Für Auskunft oder Löschung: noreplyandinfo.push@gmail.com
 
 ## Referral-Links
 

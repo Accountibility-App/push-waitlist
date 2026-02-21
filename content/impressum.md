@@ -1,20 +1,20 @@
-# Impressum (Platzhalter)
-
-**Rechtlicher Hinweis:** Dies ist ein Platzhalter. Bitte ersetze die Angaben durch die für dein Projekt gültigen Pflichtangaben nach deutschem Recht (z. B. § 5 TMG / § 18 MStV).
+# Impressum
 
 ## Angaben gemäß § 5 TMG
 
-**[Firmenname / Vor- und Nachname]**  
-[Straße und Hausnummer]  
-[PLZ und Ort]
+**Bastian Schwinger**  
+Nelkenweg 6  
+99326 Stadtilm
 
 ## Kontakt
 
-E-Mail: [kontakt@example.com]
+E-Mail: noreplyandinfo.push@gmail.com
 
 ## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
 
-[Name und Anschrift wie oben]
+Bastian Schwinger  
+Nelkenweg 6  
+99326 Stadtilm
 
 ## EU-Streitschlichtung
 
